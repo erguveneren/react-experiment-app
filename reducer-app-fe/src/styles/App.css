@@ -6,8 +6,8 @@ body, html {
 
 .appBackground {
     background-color: lightslategray;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 }
 
 .titleHeader {
@@ -64,4 +64,26 @@ body, html {
     padding: 1%; 
     box-sizing: border-box;
     margin: 1%;
+}
+
+.showButtons {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center;
+    column-gap: 1%;
+}
+
+.nextUserButton {
+    display: flex;
+    flex-direction: row; 
+    justify-content: flex-end; 
+    align-items: center;    
+}
+
+.previousUserButton {
+    display: flex;
+    flex-direction: row; 
+    justify-content: flex-start; 
+    align-items: center;    
 }
