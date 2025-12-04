@@ -1,7 +1,7 @@
 body, html {
     margin: 0;
     padding: 0;
-    height: 100%;
+    height: 100vh;
 }
 
 .appBackground {
@@ -23,17 +23,17 @@ body, html {
     align-items: center;
     flex-direction: column;
     display: flex;
+    height: 70vh;
     border: 1px solid black; 
     border-radius: 5px;
-    padding: 1%;
     margin: 1%;
     box-sizing: border-box;
 }
 
 .postListBackground {
     background-color: bisque;
-    width: 75%;
-    height: fit-content;
+    width: 75vw;
+    height: 100vh;
     border: 5px solid black; 
     border-radius: 5px;
     padding: 1%; 
@@ -42,9 +42,8 @@ body, html {
 }
 
 .postList {
-    flex-direction: row;
-    display: flex;
-    flex-wrap: wrap;
+    display: -webkit-box;
+    overflow-x: auto;
 }
 
 .userPosts {
@@ -52,26 +51,33 @@ body, html {
     flex-direction: row;
     display: flex;
     flex-wrap: wrap;
-    padding: 1%;
-    margin: 1%;
+    height: 50vh;
 }
 
 .postItem {
     background-color: palevioletred;
     width: 23%;
-    border: 1px solid black; 
+    height: 15vh;
+    overflow-y: auto;
+    border: 1px solid black;
     border-radius: 5px;
-    padding: 1%; 
+    padding-left: 1%; 
     box-sizing: border-box;
     margin: 1%;
 }
 
-.showButtons {
+.showButtonGroup {
     display: flex;
     flex-direction: row; 
     justify-content: center;
     align-items: center;
     column-gap: 1%;
+}
+
+.userButtonGroup {
+    display: flex;
+    flex-direction: row;
+    column-gap: 87%;
 }
 
 .nextUserButton {

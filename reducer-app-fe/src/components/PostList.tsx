@@ -45,7 +45,7 @@ export default function PostList() {
         <div className="postListBackground">
             <h1 className="titleHeader">FETCHED POSTS</h1>
             <h3>Total No. of Posts Available ({counter})</h3>
-            <div className="showButtons">
+            <div className="showButtonGroup">
                 <button onClick={onShowAll}>Show All</button>
                 <button onClick={onShowByUser}>Show By User</button>
             </div>
@@ -61,11 +61,13 @@ export default function PostList() {
                 {activeUserId > 0 &&
                     <div>
                         <UserPost userId={activeUserId} userPosts={postsMap.get(activeUserId)} key={activeUserId} />
-                        <div className="previousUserButton">
-                            <button onClick={onPreviousUser} disabled={activeUserId === posts[0].userId}>Previous User</button>
-                        </div>
-                        <div className="nextUserButton">
-                            <button onClick={onNextUser} disabled={activeUserId === postsMap.size}>Next User</button>
+                        <div className="userButtonGroup">
+                            <div className="previousUserButton">
+                                <button onClick={onPreviousUser} disabled={activeUserId === posts[0].userId}>Previous User</button>
+                            </div>
+                            <div className="nextUserButton">
+                                <button onClick={onNextUser} disabled={activeUserId === postsMap.size}>Next User</button>
+                            </div>
                         </div>
                     </div>
                 }
