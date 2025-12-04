@@ -2,6 +2,7 @@ import type { PostActionTypes } from "./Post.enums";
 
 export type PostContextState = {
   posts: Post[];
+  postsMap: Map<number,Post[]>;
   counter: number;
   loading: boolean;
   error: string | null;
@@ -17,5 +18,5 @@ export type Post = {
 
 export type PostAction =
   | { type: PostActionTypes.POST_FETCH_START }
-  | { type: PostActionTypes.POST_FETCH_SUCCESS; payload: Post[]; payloadLength: number}
+  | { type: PostActionTypes.POST_FETCH_SUCCESS; payload: Post[]; payloadLength: number; payloadPostsMap: Map<number,Post[]>}
   | { type: PostActionTypes.POST_FETCH_ERROR; payload: string};

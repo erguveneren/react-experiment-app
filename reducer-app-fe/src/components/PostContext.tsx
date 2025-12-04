@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-import type { PostAction,PostContextState} from "./Post.types";
+import type { Post, PostAction,PostContextState} from "./Post.types";
 import { PostActionTypes } from "./Post.enums";
 
 const postReducer = (state: PostContextState, action: PostAction) => {
@@ -7,7 +7,7 @@ const postReducer = (state: PostContextState, action: PostAction) => {
         case PostActionTypes.POST_FETCH_START:
             return {...state, loading: true, error: null};
         case PostActionTypes.POST_FETCH_SUCCESS:
-            return {...state, loading: false, posts: action.payload, counter: action.payloadLength};
+            return {...state, loading: false, posts: action.payload, postsMap: action.payloadPostsMap, counter: action.payloadLength};
         case PostActionTypes.POST_FETCH_ERROR:
             return {...state, loading: false, error: action.payload};
     }
@@ -15,6 +15,7 @@ const postReducer = (state: PostContextState, action: PostAction) => {
 
 const initialState: PostContextState = {
     posts: [],
+    postsMap: new Map<number,Post[]>(),
     counter: 0,
     loading: false,
     error: null,
@@ -33,8 +34,26 @@ const PostContextProvider = ({children}: {children: React.ReactNode}) => {
             const response = await fetch("https://jsonplaceholder.typicode.com/posts");
 
             if(response.ok) {
-                const fetchedPosts = await response.json();
-                dispatch({type: PostActionTypes.POST_FETCH_SUCCESS, payload: fetchedPosts, payloadLength: fetchedPosts.length});
+                const fetchedPosts: Post[] = await response.json();
+                var postsMap = new Map<number,Post[]>();
+
+                fetchedPosts.map((post) => {
+                    const newMap = new Map(postsMap);
+                    const existingPosts = newMap.get(post.userId);
+
+                    if(existingPosts) { // Add post to list
+                        const updatedPosts = [...existingPosts, post];
+                        newMap.set(post.userId,updatedPosts);
+                    }
+                    else { // Add new key and create list
+                        const newPosts = [post];
+                        newMap.set(post.userId,newPosts);
+                    }
+
+                    postsMap = new Map(newMap);
+                })
+                
+                dispatch({type: PostActionTypes.POST_FETCH_SUCCESS, payload: fetchedPosts, payloadLength: fetchedPosts.length, payloadPostsMap: postsMap});
             }
             else {
                 throw new Error("Could not fetch posts.");
